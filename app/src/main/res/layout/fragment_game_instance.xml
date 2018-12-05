@@ -7,17 +7,19 @@
     tools:context=".gameInstance">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="This is the new Fragment Good Job!" />
+
 
     <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="wrap_content"
-        android:layout_marginTop="150dp"
-        android:layout_height="wrap_content"
-        android:src="@drawable/okhandmeme" />
+        android:id="@+id/imageView"
+    android:layout_width="100dp"
+    android:layout_height="1000dp"
+    android:src="@android:color/holo_blue_dark" />
 
-
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="100dp"
+        android:layout_height="1000dp"
+        android:layout_gravity="right"
+        android:src="@android:color/holo_blue_dark" />
+    
 </FrameLayout>
