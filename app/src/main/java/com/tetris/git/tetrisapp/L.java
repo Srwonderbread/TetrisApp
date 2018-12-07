@@ -6,6 +6,10 @@ import java.util.List;
 
 public class L extends Shape {
 
+    public L() {
+        super();
+    }
+
     public L(ImageView block){
         super (block);
     }

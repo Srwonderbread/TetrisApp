@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ import java.util.Random;
 public class gameInstance extends Fragment {
 
     //List
-    private List<Shape> activeBlocks;
+    private Shape activeBlocks;
     private List<Shape> inactiveBlocks;
 
     //Shape Creation
@@ -31,17 +32,16 @@ public class gameInstance extends Fragment {
     private ImageView greyBlock;
 
     //Button Controls
-    private Button left;
-    private Button right;
-    private Button down;
-    private Button rotate;
+    private ImageButton left;
+    private ImageButton right;
+    private ImageButton down;
+    private ImageButton rotate;
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        activeBlocks = new ArrayList<>();
         inactiveBlocks = new ArrayList<>();
     }
 
@@ -59,7 +59,7 @@ public class gameInstance extends Fragment {
         orangeBlock = gameInstance.findViewById(R.id.orangeBlock);
         redBlock = gameInstance.findViewById(R.id.redBlock);
         yellowBlock = gameInstance.findViewById(R.id.yellowBlock);
-        
+
         left = gameInstance.findViewById(R.id.leftButton);
         right = gameInstance.findViewById(R.id.rightButton);
         down = gameInstance.findViewById(R.id.downButton);
@@ -173,35 +173,123 @@ public class gameInstance extends Fragment {
     }
 
     private void makeActiveBlockSquare(ImageView view){
+        activeBlocks = new squareBlock();
+
         view.setX(288.5f);
         view.setY(10f);
         view.setVisibility(View.VISIBLE);
 
-        activeBlocks.add(new squareBlock(view));
+        activeBlocks.getBlocks().add(view);
+
+        view.setX(313.5f);
+        view.setY(10f);
+        view.setVisibility(View.VISIBLE);
+
+        activeBlocks.getBlocks().add(view);
+
+        view.setX(288.5f);
+        view.setY(35f);
+        view.setVisibility(View.VISIBLE);
+
+        activeBlocks.getBlocks().add(view);
+
+        view.setX(313.5f);
+        view.setY(35f);
+        view.setVisibility(View.VISIBLE);
+
+        activeBlocks.getBlocks().add(view);
     }
 
     private void makeActiveBlockL(ImageView view){
-        view.setX(288.6f);
+        activeBlocks = new L();
+
+        view.setX(288.5f);
         view.setY(10f);
         view.setVisibility(View.VISIBLE);
 
-        activeBlocks.add(new L(view));
+        activeBlocks.getBlocks().add(view);
+
+        view.setX(288.5f);
+        view.setY(35f);
+        view.setVisibility(View.VISIBLE);
+
+        activeBlocks.getBlocks().add(view);
+
+        view.setX(313.5f);
+        view.setY(35f);
+        view.setVisibility(View.VISIBLE);
+
+        activeBlocks.getBlocks().add(view);
+
+        view.setX(388.5f);
+        view.setY(10f);
+        view.setVisibility(View.VISIBLE);
+
+        activeBlocks.getBlocks().add(view);
     }
 
     private void makeActiveBlockLine(ImageView view){
-        view.setX(288.6f);
+        activeBlocks = new lineBlock();
+
+        view.setX(288.5f);
         view.setY(10f);
         view.setVisibility(View.VISIBLE);
 
-        activeBlocks.add(new lineBlock(view));
+        activeBlocks.getBlocks().add(view);
+
+        view.setX(288.5f);
+        view.setY(35f);
+        view.setVisibility(View.VISIBLE);
+
+        activeBlocks.getBlocks().add(view);
+
+        view.setX(288.5f);
+        view.setY(60f);
+        view.setVisibility(View.VISIBLE);
+
+        activeBlocks.getBlocks().add(view);
+
+        view.setX(288.5f);
+        view.setY(85f);
+        view.setVisibility(View.VISIBLE);
+
+        activeBlocks.getBlocks().add(view);
     }
 
     private void makeActiveBlockJunk(ImageView view){
-        view.setX(288.6f);
+        activeBlocks = new junkBlock();
+
+        view.setX(288.5f);
         view.setY(10f);
         view.setVisibility(View.VISIBLE);
 
-        activeBlocks.add(new junkBlock(view));
+        activeBlocks.getBlocks().add(view);
+
+        view.setX(288.5f);
+        view.setY(35f);
+        view.setVisibility(View.VISIBLE);
+
+        activeBlocks.getBlocks().add(view);
+
+        view.setX(313.5f);
+        view.setY(35f);
+        view.setVisibility(View.VISIBLE);
+
+        activeBlocks.getBlocks().add(view);
+
+        view.setX(313.5f);
+        view.setY(60f);
+        view.setVisibility(View.VISIBLE);
+
+        activeBlocks.getBlocks().add(view);
+    }
+
+    private void moveButtons(){
+
+
+        for (ImageView view:activeBlocks.getBlocks()){
+            view.setX(view.getX());
+        }
     }
 
 

@@ -6,6 +6,10 @@ import java.util.List;
 
 public class junkBlock extends Shape {
 
+    public junkBlock() {
+        super();
+    }
+
     public junkBlock(ImageView block){
         super (block);
     }

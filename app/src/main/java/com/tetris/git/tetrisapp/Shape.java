@@ -7,9 +7,12 @@ import java.util.List;
 
 public abstract class Shape {
 
-    private List<ImageView> blocks;
+    //TODO: Make color a specific data piece of Shape.
+
+    protected List<ImageView> blocks;
 
     public Shape() {
+        blocks = new ArrayList<>();
     }
 
     public Shape(ImageView block){

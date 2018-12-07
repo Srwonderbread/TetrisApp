@@ -6,6 +6,10 @@ import java.util.List;
 
 public class squareBlock extends Shape {
 
+    public squareBlock() {
+        super();
+    }
+
     public squareBlock(ImageView block) {
         super(block);
     }
