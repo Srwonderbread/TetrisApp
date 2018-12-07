@@ -70,11 +70,53 @@
         android:src="@drawable/arrow"
         android:visibility="visible" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="100dp"
-        android:layout_marginRight="100dp"
-        android:orientation="horizontal"></LinearLayout>
+    <ImageView
+        android:id="@+id/blueBlock"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_weight="1"
+        android:src="@drawable/block_blue" />
+
+    <ImageView
+        android:id="@+id/greenBlock"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:src="@drawable/block_green" />
+
+    <ImageView
+        android:id="@+id/greyBlock"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:src="@drawable/block_grey" />
+
+    <ImageView
+        android:id="@+id/lightBlue"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:src="@drawable/block_lightblue" />
+
+    <ImageView
+        android:id="@+id/orangeBlock"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:src="@drawable/block_orange" />
+
+    <ImageView
+        android:id="@+id/pinkBlock"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:src="@drawable/block_pink" />
+
+    <ImageView
+        android:id="@+id/redBlock"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:src="@drawable/block_red" />
+
+    <ImageView
+        android:id="@+id/yellowBlock"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:src="@drawable/block_yelow" />
 
 </FrameLayout>
