@@ -1,13 +1,12 @@
 package com.tetris.git.tetrisapp;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
@@ -37,10 +36,32 @@ public class gameInstance extends Fragment {
     private ImageButton down;
     private ImageButton rotate;
 
+    //Game Running
+    private boolean active;
+
+    //Layout
+    private FrameLayout frameLayout;
+
+    //Dynamic Color
+    private Color color;
+
+    //Dynamic Shape
+    private Shapes shape;
+
+    //Test
+    private Block block;
+    private Block block1;
+    private Shape shapeClass;
+    private FragmentActivity fragmentActivity;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        color = makeBlockColor();
+        shape = makeShape();
+        active = true;
+        fragmentActivity = getActivity();
 
         inactiveBlocks = new ArrayList<>();
     }
@@ -51,6 +72,7 @@ public class gameInstance extends Fragment {
         // Inflate the layout for this fragment
         View gameInstance = inflater.inflate(R.layout.fragment_game_instance, container, false);
 
+
         blueBlock = gameInstance.findViewById(R.id.blueBlock);
         lightBlueBlock = gameInstance.findViewById(R.id.lightBlue);
         greenBlock = gameInstance.findViewById(R.id.greenBlock);
@@ -60,10 +82,48 @@ public class gameInstance extends Fragment {
         redBlock = gameInstance.findViewById(R.id.redBlock);
         yellowBlock = gameInstance.findViewById(R.id.yellowBlock);
 
+
         left = gameInstance.findViewById(R.id.leftButton);
         right = gameInstance.findViewById(R.id.rightButton);
         down = gameInstance.findViewById(R.id.downButton);
         rotate = gameInstance.findViewById(R.id.rotateButton);
+
+        left.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                for (int i = 0; i < 4; i++) {
+                    shapeClass.blocks.get(i).setX(shapeClass.blocks.get(i).getX() - 20f);
+                }
+            }
+        });
+
+        right.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                for (int i = 0; i < 4; i++) {
+                    shapeClass.blocks.get(i).setX(shapeClass.blocks.get(i).getX() + 20f);
+                }
+            }
+        });
+
+        down.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                for (int i = 0; i < 4; i++) {
+                    shapeClass.blocks.get(i).setY(shapeClass.blocks.get(i).getY() + 20f);
+                }
+            }
+        });
+
+        rotate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                for (int i = 0; i < 4; i++) {
+                    //shapeClass.blocks.get(i).setX(shapeClass.blocks.get(i).getX() - 20f);
+                }
+            }
+        });
+
 
         startBlock(blueBlock);
         startBlock(lightBlueBlock);
@@ -74,34 +134,27 @@ public class gameInstance extends Fragment {
         startBlock(redBlock);
         startBlock(yellowBlock);
 
-        Color color = makeBlockColor();
 
-        switch(color){
-            case blue:
-                makeBlockShape(blueBlock);
-                break;
-            case lightBlue:
-                makeBlockShape(lightBlueBlock);
-                break;
-            case green:
-                makeBlockShape(greenBlock);
-                break;
-            case grey:
-                makeBlockShape(greyBlock);
-                break;
-            case pink:
-                makeBlockShape(pinkBlock);
-                break;
-            case orange:
-                makeBlockShape(orangeBlock);
-                break;
-            case red:
-                makeBlockShape(redBlock);
-                break;
-            case yellow:
-                makeBlockShape(yellowBlock);
-                break;
+        frameLayout = gameInstance.findViewById(R.id.frameLayout);
+
+
+        shapeClass = new Shape(fragmentActivity, frameLayout, makeShape(), makeBlockColor()) {
+            @Override
+            public List<ImageView> getBlocks() {
+                return super.getBlocks();
+            }
+        };
+
+        /*
+        if(activeBlocks.blocks == null){
+            shapeClass = new Shape(fragmentActivity, frameLayout, makeShape(), makeBlockColor()) {
+                @Override
+                public List<ImageView> getBlocks() {
+                    return super.getBlocks();
+                }
+            };
         }
+        */
 
         return gameInstance;
     }
@@ -129,22 +182,8 @@ public class gameInstance extends Fragment {
         return null;
     }
 
-    private void makeBlockShape(ImageView view) {
+    private void makeBlockShape() {
         Shapes shapes = makeShape();
-        switch(shapes){
-            case square:
-                makeActiveBlockSquare(view);
-                break;
-            case L:
-                makeActiveBlockL(view);
-                break;
-            case junk:
-                makeActiveBlockJunk(view);
-                break;
-            case line:
-                makeActiveBlockLine(view);
-                break;
-        }
     }
 
     private Color makeBlockColor(){
@@ -175,26 +214,38 @@ public class gameInstance extends Fragment {
     private void makeActiveBlockSquare(ImageView view){
         activeBlocks = new squareBlock();
 
+        /*
+        switch(color){
+            case blue:
+                makeBlockShape(blueBlock);
+                break;
+            case lightBlue:
+                makeBlockShape(lightBlueBlock);
+                break;
+            case green:
+                makeBlockShape(greenBlock);
+                break;
+            case grey:
+                makeBlockShape(greyBlock);
+                break;
+            case pink:
+                makeBlockShape(pinkBlock);
+                break;
+            case orange:
+                makeBlockShape(orangeBlock);
+                break;
+            case red:
+                makeBlockShape(redBlock);
+                break;
+            case yellow:
+                makeBlockShape(yellowBlock);
+                break;
+
+        }
+        */
+
         view.setX(288.5f);
         view.setY(10f);
-        view.setVisibility(View.VISIBLE);
-
-        activeBlocks.getBlocks().add(view);
-
-        view.setX(313.5f);
-        view.setY(10f);
-        view.setVisibility(View.VISIBLE);
-
-        activeBlocks.getBlocks().add(view);
-
-        view.setX(288.5f);
-        view.setY(35f);
-        view.setVisibility(View.VISIBLE);
-
-        activeBlocks.getBlocks().add(view);
-
-        view.setX(313.5f);
-        view.setY(35f);
         view.setVisibility(View.VISIBLE);
 
         activeBlocks.getBlocks().add(view);
@@ -226,6 +277,7 @@ public class gameInstance extends Fragment {
         view.setVisibility(View.VISIBLE);
 
         activeBlocks.getBlocks().add(view);
+
     }
 
     private void makeActiveBlockLine(ImageView view){
@@ -289,6 +341,19 @@ public class gameInstance extends Fragment {
 
         for (ImageView view:activeBlocks.getBlocks()){
             view.setX(view.getX());
+        }
+    }
+
+    private void advance(){
+        while(active){
+            if(activeBlocks == null){
+                shapeClass = new Shape(getActivity(), frameLayout, makeShape(), makeBlockColor()) {
+                    @Override
+                    public List<ImageView> getBlocks() {
+                        return super.getBlocks();
+                    }
+                };
+            }
         }
     }
 
