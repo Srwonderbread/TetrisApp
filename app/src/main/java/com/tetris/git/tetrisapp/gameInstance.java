@@ -14,6 +14,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import static java.lang.Math.PI;
+import static java.lang.Math.cos;
+import static java.lang.Math.sin;
+
 public class gameInstance extends Fragment {
 
     //List
@@ -51,7 +55,7 @@ public class gameInstance extends Fragment {
     //Test
     private Block block;
     private Block block1;
-    private Shape shapeClass;
+
     private FragmentActivity fragmentActivity;
 
     @Override
@@ -88,43 +92,6 @@ public class gameInstance extends Fragment {
         down = gameInstance.findViewById(R.id.downButton);
         rotate = gameInstance.findViewById(R.id.rotateButton);
 
-        left.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                for (int i = 0; i < 4; i++) {
-                    shapeClass.blocks.get(i).setX(shapeClass.blocks.get(i).getX() - 20f);
-                }
-            }
-        });
-
-        right.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                for (int i = 0; i < 4; i++) {
-                    shapeClass.blocks.get(i).setX(shapeClass.blocks.get(i).getX() + 20f);
-                }
-            }
-        });
-
-        down.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                for (int i = 0; i < 4; i++) {
-                    shapeClass.blocks.get(i).setY(shapeClass.blocks.get(i).getY() + 20f);
-                }
-            }
-        });
-
-        rotate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                for (int i = 0; i < 4; i++) {
-                    //shapeClass.blocks.get(i).setX(shapeClass.blocks.get(i).getX() - 20f);
-                }
-            }
-        });
-
-
         startBlock(blueBlock);
         startBlock(lightBlueBlock);
         startBlock(greenBlock);
@@ -138,23 +105,49 @@ public class gameInstance extends Fragment {
         frameLayout = gameInstance.findViewById(R.id.frameLayout);
 
 
-        shapeClass = new Shape(fragmentActivity, frameLayout, makeShape(), makeBlockColor()) {
+        activeBlocks = new Shape(fragmentActivity, frameLayout, makeShape(), makeBlockColor()) {
             @Override
             public List<ImageView> getBlocks() {
                 return super.getBlocks();
             }
         };
 
-        /*
-        if(activeBlocks.blocks == null){
-            shapeClass = new Shape(fragmentActivity, frameLayout, makeShape(), makeBlockColor()) {
-                @Override
-                public List<ImageView> getBlocks() {
-                    return super.getBlocks();
+        left.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                for (int i = 0; i < 4; i++) {
+                    activeBlocks.getBlocks().get(i).setX(activeBlocks.getBlocks().get(i).getX() - 25f);
                 }
-            };
-        }
-        */
+                activeBlocks.centerX = activeBlocks.centerX - 25f;
+            }
+        });
+
+        right.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                for (int i = 0; i < 4; i++) {
+                    activeBlocks.getBlocks().get(i).setX(activeBlocks.getBlocks().get(i).getX() + 25f);
+                }
+                activeBlocks.centerX = activeBlocks.centerX + 25f;
+            }
+        });
+
+        down.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                for (int i = 0; i < 4; i++) {
+                    activeBlocks.getBlocks().get(i).setY(activeBlocks.getBlocks().get(i).getY() + 15f);
+                }
+                activeBlocks.centerY = activeBlocks.centerY + 15f;
+            }
+        });
+
+        rotate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                rotate();
+            }
+        });
 
         return gameInstance;
     }
@@ -182,10 +175,6 @@ public class gameInstance extends Fragment {
         return null;
     }
 
-    private void makeBlockShape() {
-        Shapes shapes = makeShape();
-    }
-
     private Color makeBlockColor(){
         int random = Math.abs(new Random().nextInt());
         int colorIndex = random%8;
@@ -211,143 +200,42 @@ public class gameInstance extends Fragment {
         return Color.blue;
     }
 
-    private void makeActiveBlockSquare(ImageView view){
-        activeBlocks = new squareBlock();
+    public void rotate(){
+        float newX;
+        float newY;
+        float originX = activeBlocks.centerX;
+        float originY = activeBlocks.centerY;
+        float x;
+        float y;
+        float relativeX;
+        float relativeY;
+        for (int i = 0; i < 4; i++) {
+            x = activeBlocks.getBlocks().get(i).getX();
+            y = activeBlocks.getBlocks().get(i).getY();
 
-        /*
-        switch(color){
-            case blue:
-                makeBlockShape(blueBlock);
-                break;
-            case lightBlue:
-                makeBlockShape(lightBlueBlock);
-                break;
-            case green:
-                makeBlockShape(greenBlock);
-                break;
-            case grey:
-                makeBlockShape(greyBlock);
-                break;
-            case pink:
-                makeBlockShape(pinkBlock);
-                break;
-            case orange:
-                makeBlockShape(orangeBlock);
-                break;
-            case red:
-                makeBlockShape(redBlock);
-                break;
-            case yellow:
-                makeBlockShape(yellowBlock);
-                break;
+            relativeX = x - originX;
+            relativeY = y - originY;
 
-        }
-        */
+            relativeY *= -1;
 
-        view.setX(288.5f);
-        view.setY(10f);
-        view.setVisibility(View.VISIBLE);
+            newX = relativeX * (float) cos(PI/2) - relativeY * (float) sin(PI/2);
+            newY = relativeX * (float) sin(PI/2) + relativeY * (float) cos(PI/2);
 
-        activeBlocks.getBlocks().add(view);
-    }
+            newY *= -1;
 
-    private void makeActiveBlockL(ImageView view){
-        activeBlocks = new L();
+            newX += originX;
+            newY += originY;
 
-        view.setX(288.5f);
-        view.setY(10f);
-        view.setVisibility(View.VISIBLE);
+            activeBlocks.getBlocks().get(i).setX(newX);
+            activeBlocks.getBlocks().get(i).setY(newY);
 
-        activeBlocks.getBlocks().add(view);
-
-        view.setX(288.5f);
-        view.setY(35f);
-        view.setVisibility(View.VISIBLE);
-
-        activeBlocks.getBlocks().add(view);
-
-        view.setX(313.5f);
-        view.setY(35f);
-        view.setVisibility(View.VISIBLE);
-
-        activeBlocks.getBlocks().add(view);
-
-        view.setX(388.5f);
-        view.setY(10f);
-        view.setVisibility(View.VISIBLE);
-
-        activeBlocks.getBlocks().add(view);
-
-    }
-
-    private void makeActiveBlockLine(ImageView view){
-        activeBlocks = new lineBlock();
-
-        view.setX(288.5f);
-        view.setY(10f);
-        view.setVisibility(View.VISIBLE);
-
-        activeBlocks.getBlocks().add(view);
-
-        view.setX(288.5f);
-        view.setY(35f);
-        view.setVisibility(View.VISIBLE);
-
-        activeBlocks.getBlocks().add(view);
-
-        view.setX(288.5f);
-        view.setY(60f);
-        view.setVisibility(View.VISIBLE);
-
-        activeBlocks.getBlocks().add(view);
-
-        view.setX(288.5f);
-        view.setY(85f);
-        view.setVisibility(View.VISIBLE);
-
-        activeBlocks.getBlocks().add(view);
-    }
-
-    private void makeActiveBlockJunk(ImageView view){
-        activeBlocks = new junkBlock();
-
-        view.setX(288.5f);
-        view.setY(10f);
-        view.setVisibility(View.VISIBLE);
-
-        activeBlocks.getBlocks().add(view);
-
-        view.setX(288.5f);
-        view.setY(35f);
-        view.setVisibility(View.VISIBLE);
-
-        activeBlocks.getBlocks().add(view);
-
-        view.setX(313.5f);
-        view.setY(35f);
-        view.setVisibility(View.VISIBLE);
-
-        activeBlocks.getBlocks().add(view);
-
-        view.setX(313.5f);
-        view.setY(60f);
-        view.setVisibility(View.VISIBLE);
-
-        activeBlocks.getBlocks().add(view);
-    }
-
-    private void moveButtons(){
-
-
-        for (ImageView view:activeBlocks.getBlocks()){
-            view.setX(view.getX());
         }
     }
 
     private void advance(){
         while(active){
             if(activeBlocks == null){
-                shapeClass = new Shape(getActivity(), frameLayout, makeShape(), makeBlockColor()) {
+                activeBlocks = new Shape(getActivity(), frameLayout, makeShape(), makeBlockColor()) {
                     @Override
                     public List<ImageView> getBlocks() {
                         return super.getBlocks();

@@ -37,11 +37,11 @@ public class lineBlock extends Shape {
         for (int i =0; i < 4; i++){
             switch (i){
                 case 0:
-                    block = new Block(fragment, frameLayout);
+                    block = new Block(fragment, frameLayout, Shapes.line);
 
                     block.image.setBackgroundResource(blockColor);
-                    block.image.setX(288.5f);
-                    block.image.setY(10f);
+                    block.image.setX(275f);
+                    block.image.setY(25f);
                     block.image.setMaxHeight(25);
                     block.image.setMaxWidth(25);
                     block.image.setLayoutParams(new ViewGroup.LayoutParams(25, 25));
@@ -49,11 +49,11 @@ public class lineBlock extends Shape {
                     blocks.add(block.image);
                     break;
                 case 1:
-                    block = new Block(fragment, frameLayout);
+                    block = new Block(fragment, frameLayout, Shapes.line);
 
                     block.image.setBackgroundResource(blockColor);
-                    block.image.setX(288.5f);
-                    block.image.setY(35f);
+                    block.image.setX(275f);
+                    block.image.setY(50f);
                     block.image.setMaxHeight(25);
                     block.image.setMaxWidth(25);
                     block.image.setLayoutParams(new ViewGroup.LayoutParams(25, 25));
@@ -61,11 +61,11 @@ public class lineBlock extends Shape {
                     blocks.add(block.image);
                     break;
                 case 2:
-                    block = new Block(fragment, frameLayout);
+                    block = new Block(fragment, frameLayout, Shapes.line);
 
                     block.image.setBackgroundResource(blockColor);
-                    block.image.setX(288.5f);
-                    block.image.setY(60f);
+                    block.image.setX(275f);
+                    block.image.setY(75f);
                     block.image.setMaxHeight(25);
                     block.image.setMaxWidth(25);
                     block.image.setLayoutParams(new ViewGroup.LayoutParams(25, 25));
@@ -73,11 +73,11 @@ public class lineBlock extends Shape {
                     blocks.add(block.image);
                     break;
                 case 3:
-                    block = new Block(fragment, frameLayout);
+                    block = new Block(fragment, frameLayout, Shapes.line);
 
                     block.image.setBackgroundResource(blockColor);
-                    block.image.setX(288.5f);
-                    block.image.setY(85f);
+                    block.image.setX(275f);
+                    block.image.setY(100f);
                     block.image.setMaxHeight(25);
                     block.image.setMaxWidth(25);
                     block.image.setLayoutParams(new ViewGroup.LayoutParams(25, 25));
