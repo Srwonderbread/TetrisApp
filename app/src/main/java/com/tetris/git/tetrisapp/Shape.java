@@ -11,7 +11,9 @@ public abstract class Shape {
 
     //TODO: Make color a specific data piece of Shape.
     private Color color;
-    private Shapes shape;
+    protected Shapes shape;
+    protected float centerX;
+    protected float centerY;
 
     private int blockColor;
 
@@ -62,15 +64,27 @@ public abstract class Shape {
         switch(shape){
             case square:
                 squareBlock squareBlock = new squareBlock(frameLayout, fragment, blockColor);
+                setBlocks(squareBlock.blocks);
+                centerX = 287.5f;
+                centerY = 37.5f;
                 break;
             case L:
                 L LBlock = new L(frameLayout, fragment, blockColor);
+                setBlocks(LBlock.blocks);
+                centerX = 287.5f;
+                centerY = 37.5f;
                 break;
             case junk:
                 junkBlock junkBlock = new junkBlock(frameLayout, fragment, blockColor);
+                setBlocks(junkBlock.blocks);
+                centerX = 287.5f;
+                centerY = 50f;
                 break;
             case line:
                 lineBlock lineBlock = new lineBlock(frameLayout, fragment, blockColor);
+                setBlocks(lineBlock.blocks);
+                centerX = 275f;
+                centerY = 62.5f;
                 break;
         }
     }
