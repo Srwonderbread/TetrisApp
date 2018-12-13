@@ -115,37 +115,50 @@ public class gameInstance extends Fragment {
         left.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                for (int i = 0; i < 4; i++) {
-                    activeBlocks.getBlocks().get(i).setX(activeBlocks.getBlocks().get(i).getX() - 25f);
+                if (checkLeft()) {
+                    for (int i = 0; i < 4; i++) {
+
+                        activeBlocks.getBlocks().get(i).setX(activeBlocks.getBlocks().get(i).getX() - 25f);
+                    }
+                    activeBlocks.centerX = activeBlocks.centerX - 25f;
                 }
-                activeBlocks.centerX = activeBlocks.centerX - 25f;
             }
         });
 
         right.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                for (int i = 0; i < 4; i++) {
-                    activeBlocks.getBlocks().get(i).setX(activeBlocks.getBlocks().get(i).getX() + 25f);
+                if (checkRight()) {
+                    for (int i = 0; i < 4; i++) {
+                        activeBlocks.getBlocks().get(i).setX(activeBlocks.getBlocks().get(i).getX() + 25f);
+                    }
+                    activeBlocks.centerX = activeBlocks.centerX + 25f;
                 }
-                activeBlocks.centerX = activeBlocks.centerX + 25f;
             }
         });
+
+
 
         down.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                for (int i = 0; i < 4; i++) {
-                    activeBlocks.getBlocks().get(i).setY(activeBlocks.getBlocks().get(i).getY() + 15f);
+                if (checkBottom()) {
+                    for (int i = 0; i < 4; i++) {
+                        activeBlocks.getBlocks().get(i).setY(activeBlocks.getBlocks().get(i).getY() + 15f);
+                    }
+                    activeBlocks.centerY = activeBlocks.centerY + 15f;
                 }
-                activeBlocks.centerY = activeBlocks.centerY + 15f;
             }
         });
 
         rotate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                rotate();
+                if (checkLOrLine()) {
+                    rotate();
+                } else if (checkLeft() && checkRight()) {
+                    rotate();
+                }
             }
         });
 
@@ -209,6 +222,8 @@ public class gameInstance extends Fragment {
         float y;
         float relativeX;
         float relativeY;
+        List<Float> rotationXSafety = new ArrayList<>();
+        List<Float> rotationYSafety = new ArrayList<>();
         for (int i = 0; i < 4; i++) {
             x = activeBlocks.getBlocks().get(i).getX();
             y = activeBlocks.getBlocks().get(i).getY();
@@ -226,11 +241,81 @@ public class gameInstance extends Fragment {
             newX += originX;
             newY += originY;
 
-            activeBlocks.getBlocks().get(i).setX(newX);
-            activeBlocks.getBlocks().get(i).setY(newY);
+            rotationXSafety.add(newX);
+            rotationYSafety.add(newY);
 
         }
+        boolean isInBoundsX = true;
+        boolean isInBoundsY = true;
+        for (int i = 0; i < 4; i++){
+            if (rotationXSafety.get(i) < 100 || rotationXSafety.get(i) >= 500){
+                isInBoundsX = false;
+            }
+        }
+        for (int i = 0; i < 4; i++){
+            if (rotationYSafety.get(i) < 0 || rotationYSafety.get(i) >= 835){
+                isInBoundsY = false;
+            }
+        }
+        if (isInBoundsX == true && isInBoundsY == true){
+            for (int i = 0; i < 4; i++){
+                activeBlocks.getBlocks().get(i).setX(rotationXSafety.get(i));
+                activeBlocks.getBlocks().get(i).setY(rotationYSafety.get(i));
+            }
+        }
+
     }
+
+    public boolean checkLeft(){
+        float check = 0;
+        for (int i = 0; i < 4; i++) {
+            check = activeBlocks.getBlocks().get(i).getX();
+            if (activeBlocks.getBlocks().get(i).getX() <= 100){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean checkRight(){
+        float check;
+        for (int i = 0; i < 4; i++) {
+            check = activeBlocks.getBlocks().get(i).getX();
+            if (activeBlocks.getBlocks().get(i).getX() >= 475){
+                return false;
+            }
+        }
+        return true;
+    }
+    public boolean checkBottom(){
+        for (int i = 0; i < 4; i++){
+            if (activeBlocks.getBlocks().get(i).getY() >= 850){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean checkLOrLine(){
+        List<Shapes> blockCheckList = new ArrayList<>();
+        float check;
+        if (activeBlocks.shape == Shapes.line || activeBlocks.shape == Shapes.L) {
+            for (int i = 0; i < 4; i++) {
+                check = activeBlocks.getBlocks().get(i).getX();
+                if (activeBlocks.getBlocks().get(i).getX() >= 475) {
+                    blockCheckList.add(Shapes.line);
+                }
+                else if (activeBlocks.getBlocks().get(i).getX() <= 100) {
+                    blockCheckList.add(Shapes.L);
+                }
+            }
+            if (blockCheckList.size() > 3){
+                return false;
+            }
+        }
+        return true;
+    }
+
 
     private void advance(){
         while(active){

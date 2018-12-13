@@ -71,20 +71,28 @@ public abstract class Shape {
             case L:
                 L LBlock = new L(frameLayout, fragment, blockColor);
                 setBlocks(LBlock.blocks);
-                centerX = 287.5f;
-                centerY = 37.5f;
+                centerX = 275f;
+                centerY = 25f;
+
+                //centerX = 287.5f;
+                //centerY = 37.5f;
                 break;
             case junk:
                 junkBlock junkBlock = new junkBlock(frameLayout, fragment, blockColor);
                 setBlocks(junkBlock.blocks);
-                centerX = 287.5f;
+                centerX = 275f;
                 centerY = 50f;
+
+                //centerX = 287.5f;
+                //centerY = 50f;
                 break;
             case line:
                 lineBlock lineBlock = new lineBlock(frameLayout, fragment, blockColor);
                 setBlocks(lineBlock.blocks);
                 centerX = 275f;
-                centerY = 62.5f;
+                centerY = 50f;
+                //centerX = 275f;
+                //centerY = 62.5f;
                 break;
         }
     }
