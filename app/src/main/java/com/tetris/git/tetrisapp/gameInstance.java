@@ -123,7 +123,7 @@ public class gameInstance extends Fragment {
         rotate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (checkLOrLine()) {
+                if (!checkLOrLine()) {
                     rotate();
                 } else if (checkLeft() && checkRight()) {
                     rotate();
@@ -266,6 +266,7 @@ public class gameInstance extends Fragment {
     }
 
     public boolean checkLOrLine(){
+        boolean blockCheck;
         List<Shapes> blockCheckList = new ArrayList<>();
         //float check;
         if (activeBlocks.shape == Shapes.line || activeBlocks.shape == Shapes.L) {
@@ -278,7 +279,8 @@ public class gameInstance extends Fragment {
                     blockCheckList.add(Shapes.L);
                 }
             }
-            return (blockCheckList.size() > 3);
+            blockCheck = blockCheckList.size() >= 3;
+            return blockCheck;
         }
         return true;
     }
