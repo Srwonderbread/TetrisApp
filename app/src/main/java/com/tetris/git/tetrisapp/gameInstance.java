@@ -1,6 +1,7 @@
 package com.tetris.git.tetrisapp;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
@@ -22,75 +23,43 @@ public class gameInstance extends Fragment {
 
     //List
     private Shape activeBlocks;
-    private List<Shape> inactiveBlocks;
 
-    //Shape Creation
-    private ImageView blueBlock;
-    private ImageView lightBlueBlock;
-    private ImageView greenBlock;
-    private ImageView pinkBlock;
-    private ImageView orangeBlock;
-    private ImageView redBlock;
-    private ImageView yellowBlock;
-    private ImageView greyBlock;
+    //Use when starting to make gravity
+    //private List<Shape> inactiveBlocks;
 
-    //Button Controls
-    private ImageButton left;
-    private ImageButton right;
-    private ImageButton down;
-    private ImageButton rotate;
-
-    //Game Running
-    private boolean active;
-
-    //Layout
-    private FrameLayout frameLayout;
-
-    //Dynamic Color
-    private Color color;
-
-    //Dynamic Shape
-    private Shapes shape;
-
-    //Test
-    private Block block;
-    private Block block1;
-
+    //Passed to the Block class so that it knows where to create the individual blocks.
     private FragmentActivity fragmentActivity;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        color = makeBlockColor();
-        shape = makeShape();
-        active = true;
         fragmentActivity = getActivity();
 
-        inactiveBlocks = new ArrayList<>();
+        //inactiveBlocks = new ArrayList<>();
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View gameInstance = inflater.inflate(R.layout.fragment_game_instance, container, false);
 
 
-        blueBlock = gameInstance.findViewById(R.id.blueBlock);
-        lightBlueBlock = gameInstance.findViewById(R.id.lightBlue);
-        greenBlock = gameInstance.findViewById(R.id.greenBlock);
-        greyBlock = gameInstance.findViewById(R.id.greyBlock);
-        pinkBlock = gameInstance.findViewById(R.id.pinkBlock);
-        orangeBlock = gameInstance.findViewById(R.id.orangeBlock);
-        redBlock = gameInstance.findViewById(R.id.redBlock);
-        yellowBlock = gameInstance.findViewById(R.id.yellowBlock);
+        ImageView blueBlock = gameInstance.findViewById(R.id.blueBlock);
+        ImageView lightBlueBlock = gameInstance.findViewById(R.id.lightBlue);
+        ImageView greenBlock = gameInstance.findViewById(R.id.greenBlock);
+        ImageView greyBlock = gameInstance.findViewById(R.id.greyBlock);
+        ImageView pinkBlock = gameInstance.findViewById(R.id.pinkBlock);
+        ImageView orangeBlock = gameInstance.findViewById(R.id.orangeBlock);
+        ImageView redBlock = gameInstance.findViewById(R.id.redBlock);
+        ImageView yellowBlock = gameInstance.findViewById(R.id.yellowBlock);
 
 
-        left = gameInstance.findViewById(R.id.leftButton);
-        right = gameInstance.findViewById(R.id.rightButton);
-        down = gameInstance.findViewById(R.id.downButton);
-        rotate = gameInstance.findViewById(R.id.rotateButton);
+        ImageButton left = gameInstance.findViewById(R.id.leftButton);
+        ImageButton right = gameInstance.findViewById(R.id.rightButton);
+        ImageButton down = gameInstance.findViewById(R.id.downButton);
+        ImageButton rotate = gameInstance.findViewById(R.id.rotateButton);
 
         startBlock(blueBlock);
         startBlock(lightBlueBlock);
@@ -102,7 +71,7 @@ public class gameInstance extends Fragment {
         startBlock(yellowBlock);
 
 
-        frameLayout = gameInstance.findViewById(R.id.frameLayout);
+        FrameLayout frameLayout = gameInstance.findViewById(R.id.frameLayout);
 
 
         activeBlocks = new Shape(fragmentActivity, frameLayout, makeShape(), makeBlockColor()) {
@@ -257,7 +226,7 @@ public class gameInstance extends Fragment {
                 isInBoundsY = false;
             }
         }
-        if (isInBoundsX == true && isInBoundsY == true){
+        if (isInBoundsX && isInBoundsY){
             for (int i = 0; i < 4; i++){
                 activeBlocks.getBlocks().get(i).setX(rotationXSafety.get(i));
                 activeBlocks.getBlocks().get(i).setY(rotationYSafety.get(i));
@@ -267,9 +236,9 @@ public class gameInstance extends Fragment {
     }
 
     public boolean checkLeft(){
-        float check = 0;
+        //float check = 0;
         for (int i = 0; i < 4; i++) {
-            check = activeBlocks.getBlocks().get(i).getX();
+            //check = activeBlocks.getBlocks().get(i).getX();
             if (activeBlocks.getBlocks().get(i).getX() <= 100){
                 return false;
             }
@@ -278,9 +247,9 @@ public class gameInstance extends Fragment {
     }
 
     public boolean checkRight(){
-        float check;
+        //float check;
         for (int i = 0; i < 4; i++) {
-            check = activeBlocks.getBlocks().get(i).getX();
+            //check = activeBlocks.getBlocks().get(i).getX();
             if (activeBlocks.getBlocks().get(i).getX() >= 475){
                 return false;
             }
@@ -298,10 +267,10 @@ public class gameInstance extends Fragment {
 
     public boolean checkLOrLine(){
         List<Shapes> blockCheckList = new ArrayList<>();
-        float check;
+        //float check;
         if (activeBlocks.shape == Shapes.line || activeBlocks.shape == Shapes.L) {
             for (int i = 0; i < 4; i++) {
-                check = activeBlocks.getBlocks().get(i).getX();
+                //check = activeBlocks.getBlocks().get(i).getX();
                 if (activeBlocks.getBlocks().get(i).getX() >= 475) {
                     blockCheckList.add(Shapes.line);
                 }
@@ -309,26 +278,8 @@ public class gameInstance extends Fragment {
                     blockCheckList.add(Shapes.L);
                 }
             }
-            if (blockCheckList.size() > 3){
-                return false;
-            }
+            return (blockCheckList.size() > 3);
         }
         return true;
     }
-
-
-    private void advance(){
-        while(active){
-            if(activeBlocks == null){
-                activeBlocks = new Shape(getActivity(), frameLayout, makeShape(), makeBlockColor()) {
-                    @Override
-                    public List<ImageView> getBlocks() {
-                        return super.getBlocks();
-                    }
-                };
-            }
-        }
-    }
-
-
 }
