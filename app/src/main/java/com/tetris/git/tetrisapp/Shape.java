@@ -7,7 +7,7 @@ import android.widget.ImageView;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Shape {
+public class Shape {
 
     //TODO: Make color a specific data piece of Shape.
     private Color color;
@@ -26,7 +26,7 @@ public abstract class Shape {
         blocks = new ArrayList<>();
     }
 
-    Shape(FragmentActivity fragment, FrameLayout frameLayout, Shapes shape, Color color) {
+    public Shape(FragmentActivity fragment, FrameLayout frameLayout, Shapes shape, Color color) {
         this.fragment = fragment;
         this.frameLayout = frameLayout;
         this.shape = shape;

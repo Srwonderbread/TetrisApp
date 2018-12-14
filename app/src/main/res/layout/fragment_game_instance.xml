@@ -136,4 +136,12 @@
         android:src="@drawable/block_yellow"
         android:contentDescription="@string/yellow_block" />
 
+    <FrameLayout
+        android:id="@+id/blockLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".gameInstance">
+
+    </FrameLayout>
+
 </FrameLayout>

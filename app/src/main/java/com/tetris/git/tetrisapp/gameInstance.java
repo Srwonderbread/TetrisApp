@@ -8,12 +8,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import static java.lang.Math.PI;
 import static java.lang.Math.cos;
@@ -24,11 +25,20 @@ public class gameInstance extends Fragment {
     //List
     private Shape activeBlocks;
 
+    private FrameLayout frameLayout;
+
     //Use when starting to make gravity
-    protected List<Shape> inactiveBlocks;
+    protected List<ImageView> inactiveBlocks;
 
     //Passed to the Block class so that it knows where to create the individual blocks.
     private FragmentActivity fragmentActivity;
+
+    private ImageView left;
+    private ImageView right;
+    private ImageView down;
+    private ImageView rotate;
+
+    private View gameInstance;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -43,7 +53,7 @@ public class gameInstance extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View gameInstance = inflater.inflate(R.layout.fragment_game_instance, container, false);
+        gameInstance = inflater.inflate(R.layout.fragment_game_instance, container, false);
 
 
         ImageView blueBlock = gameInstance.findViewById(R.id.blueBlock);
@@ -56,10 +66,10 @@ public class gameInstance extends Fragment {
         ImageView yellowBlock = gameInstance.findViewById(R.id.yellowBlock);
 
 
-        ImageButton left = gameInstance.findViewById(R.id.leftButton);
-        ImageButton right = gameInstance.findViewById(R.id.rightButton);
-        ImageButton down = gameInstance.findViewById(R.id.downButton);
-        ImageButton rotate = gameInstance.findViewById(R.id.rotateButton);
+        left = gameInstance.findViewById(R.id.leftButton);
+        right = gameInstance.findViewById(R.id.rightButton);
+        down = gameInstance.findViewById(R.id.downButton);
+        rotate = gameInstance.findViewById(R.id.rotateButton);
 
         startBlock(blueBlock);
         startBlock(lightBlueBlock);
@@ -70,67 +80,14 @@ public class gameInstance extends Fragment {
         startBlock(redBlock);
         startBlock(yellowBlock);
 
-
-        FrameLayout frameLayout = gameInstance.findViewById(R.id.frameLayout);
-
-
-        activeBlocks = new Shape(fragmentActivity, frameLayout, makeShape(), makeBlockColor()) {
-            @Override
-            public List<ImageView> getBlocks() {
-                return super.getBlocks();
-            }
-        };
-
-        left.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (checkLeft()) {
-                    for (int i = 0; i < 4; i++) {
-                        activeBlocks.getBlocks().get(i).setX(activeBlocks.getBlocks().get(i).getX() - 25f);
-                    }
-                    activeBlocks.centerX = activeBlocks.centerX - 25f;
-                }
-            }
-        });
-
-        right.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (checkRight()) {
-                    for (int i = 0; i < 4; i++) {
-                        activeBlocks.getBlocks().get(i).setX(activeBlocks.getBlocks().get(i).getX() + 25f);
-                    }
-                    activeBlocks.centerX = activeBlocks.centerX + 25f;
-                }
-            }
-        });
-
-
-
-        down.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (checkBottom()) {
-                    for (int i = 0; i < 4; i++) {
-                        activeBlocks.getBlocks().get(i).setY(activeBlocks.getBlocks().get(i).getY() + 15f);
-                    }
-                    activeBlocks.centerY = activeBlocks.centerY + 15f;
-                }
-            }
-        });
-
-        rotate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!checkLOrLine()) {
-                    rotate();
-                } else if (checkLeft() && checkRight()) {
-                    rotate();
-                }
-            }
-        });
-
         return gameInstance;
+    }
+
+    private void makeActiveBlocks(){
+        frameLayout = gameInstance.findViewById(R.id.blockLayout);
+        activeBlocks = new Shape(fragmentActivity, frameLayout, makeShape(), makeBlockColor());
+        timer = new Timer();
+        timer.schedule(new Gravity(), 5000, 1000);
     }
 
     private void startBlock(ImageView view){
@@ -282,5 +239,88 @@ public class gameInstance extends Fragment {
             return blockCheck;
         }
         return true;
+    }
+
+    private boolean run = true;
+    private Timer timer;
+
+    private void createView(){
+        fragmentActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                makeActiveBlocks();
+
+                left.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (checkLeft()) {
+                            for (int i = 0; i < 4; i++) {
+                                activeBlocks.getBlocks().get(i).setX(activeBlocks.getBlocks().get(i).getX() - 25f);
+                            }
+                            activeBlocks.centerX = activeBlocks.centerX - 25f;
+                        }
+                    }
+                });
+
+                right.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (checkRight()) {
+                            for (int i = 0; i < 4; i++) {
+                                activeBlocks.getBlocks().get(i).setX(activeBlocks.getBlocks().get(i).getX() + 25f);
+                            }
+                            activeBlocks.centerX = activeBlocks.centerX + 25f;
+                        }
+                    }
+                });
+
+
+
+                down.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (checkBottom()) {
+                            for (int i = 0; i < 4; i++) {
+                                activeBlocks.getBlocks().get(i).setY(activeBlocks.getBlocks().get(i).getY() + 15f);
+                            }
+                            activeBlocks.centerY = activeBlocks.centerY + 15f;
+                        }
+                    }
+                });
+
+                rotate.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (!checkLOrLine()) {
+                            rotate();
+                        } else if (checkLeft() && checkRight()) {
+                            rotate();
+                        }
+                    }
+                });
+            }
+        });
+    }
+
+    private class Gravity extends TimerTask {
+        @Override
+        public void run() {
+            if (!checkBottom()) {
+                inactiveBlocks.addAll(activeBlocks.blocks);
+                makeActiveBlocks();
+                run = false;
+            }
+            if (run) {
+                for (ImageView view : activeBlocks.getBlocks()) {
+                    view.setY(view.getY() + 15f);
+                }
+                activeBlocks.centerY = activeBlocks.centerY + 15f;
+            }
+            else{
+                timer.cancel();
+                timer.purge();
+                run = true;
+            }
+        }
     }
 }

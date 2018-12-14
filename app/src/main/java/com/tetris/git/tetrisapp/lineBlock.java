@@ -29,7 +29,8 @@ class lineBlock extends Shape {
                     block.image.setMaxHeight(25);
                     block.image.setMaxWidth(25);
                     block.image.setLayoutParams(new ViewGroup.LayoutParams(25, 25));
-                    block.frameLayout.addView(block.image);
+                    frameLayout.clearFocus();
+                    block.frameLayout.addView(block.getImage());
                     blocks.add(block.image);
                     break;
                 case 1:

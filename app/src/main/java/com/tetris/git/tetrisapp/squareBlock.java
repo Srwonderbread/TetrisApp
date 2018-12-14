@@ -19,10 +19,9 @@ class squareBlock extends Shape {
 
     private void createSquare() {
         for (int i = 0; i < 4; i++){
-            Block block;
             switch (i) {
                 case 0:
-                    block = new Block(fragment, frameLayout);
+                    Block block = new Block(fragment, frameLayout);
 
                     block.image.setBackgroundResource(blockColor);
                     block.image.setX(275f);
@@ -30,9 +29,10 @@ class squareBlock extends Shape {
                     block.image.setMaxHeight(25);
                     block.image.setMaxWidth(25);
                     block.image.setLayoutParams(new ViewGroup.LayoutParams(25, 25));
-                    block.frameLayout.addView(block.image);
+                    frameLayout.clearFocus();
+                    block.frameLayout.addView(block.getImage());
                     blocks.add(block.image);
-
+                    break;
                 case 1:
                     block = new Block(fragment, frameLayout);
 
@@ -44,7 +44,7 @@ class squareBlock extends Shape {
                     block.image.setLayoutParams(new ViewGroup.LayoutParams(25, 25));
                     block.frameLayout.addView(block.image);
                     blocks.add(block.image);
-
+                    break;
                 case 2:
                     block = new Block(fragment, frameLayout);
 
@@ -56,7 +56,7 @@ class squareBlock extends Shape {
                     block.image.setLayoutParams(new ViewGroup.LayoutParams(25, 25));
                     block.frameLayout.addView(block.image);
                     blocks.add(block.image);
-
+                    break;
                 case 3:
                     block = new Block(fragment, frameLayout);
 
@@ -68,6 +68,7 @@ class squareBlock extends Shape {
                     block.image.setLayoutParams(new ViewGroup.LayoutParams(25, 25));
                     block.frameLayout.addView(block.image);
                     blocks.add(block.image);
+                    break;
             }
         }
     }

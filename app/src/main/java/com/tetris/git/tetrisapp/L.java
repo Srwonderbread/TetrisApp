@@ -11,6 +11,7 @@ class L extends Shape {
     private int blockColor;
 
     L(FrameLayout frameLayout, FragmentActivity fragment, int blockColor){
+
         this.fragment = fragment;
         this.frameLayout = frameLayout;
         this.blockColor = blockColor;
@@ -29,7 +30,8 @@ class L extends Shape {
                     block.image.setMaxHeight(25);
                     block.image.setMaxWidth(25);
                     block.image.setLayoutParams(new ViewGroup.LayoutParams(25, 25));
-                    block.frameLayout.addView(block.image);
+                    frameLayout.clearFocus();
+                    block.frameLayout.addView(block.getImage());
                     blocks.add(block.image);
                     break;
                 case 1:
