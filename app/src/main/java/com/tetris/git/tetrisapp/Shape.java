@@ -20,13 +20,13 @@ public abstract class Shape {
     private FragmentActivity fragment;
     private FrameLayout frameLayout;
 
-    protected List<ImageView> blocks;
+    List<ImageView> blocks;
 
-    public Shape() {
+    Shape() {
         blocks = new ArrayList<>();
     }
 
-    public Shape(FragmentActivity fragment, FrameLayout frameLayout, Shapes shape, Color color) {
+    Shape(FragmentActivity fragment, FrameLayout frameLayout, Shapes shape, Color color) {
         this.fragment = fragment;
         this.frameLayout = frameLayout;
         this.shape = shape;
@@ -37,26 +37,11 @@ public abstract class Shape {
         createBlockShape();
     }
 
-    public Shape(FragmentActivity fragment, FrameLayout frameLayout, List<ImageView> blocks) {
-        this.fragment = fragment;
-        this.frameLayout = frameLayout;
-        this.blocks = blocks;
-    }
-
-    public Shape(ImageView block){
-        blocks = new ArrayList<>();
-        blocks.add(block);
-    }
-
-    public Shape(List<ImageView> blocks) {
-        this.blocks = blocks;
-    }
-
     public List<ImageView> getBlocks() {
         return blocks;
     }
 
-    public void setBlocks(List<ImageView> blocks) {
+    private void setBlocks(List<ImageView> blocks) {
         this.blocks = blocks;
     }
 
@@ -97,13 +82,13 @@ public abstract class Shape {
         }
     }
 
-    public void setUpColor(){
+    private void setUpColor(){
             switch(color){
                 case blue:
                     blockColor = R.drawable.block_blue;
                     break;
                 case lightBlue:
-                    blockColor = R.drawable.block_lightblue;
+                    blockColor = R.drawable.block_light_blue;
                     break;
                 case green:
                     blockColor = R.drawable.block_green;
@@ -121,7 +106,7 @@ public abstract class Shape {
                     blockColor = R.drawable.block_red;
                     break;
                 case yellow:
-                    blockColor = R.drawable.block_yelow;
+                    blockColor = R.drawable.block_yellow;
                     break;
             }
     }

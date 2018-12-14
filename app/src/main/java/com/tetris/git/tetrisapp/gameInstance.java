@@ -25,7 +25,7 @@ public class gameInstance extends Fragment {
     private Shape activeBlocks;
 
     //Use when starting to make gravity
-    //private List<Shape> inactiveBlocks;
+    protected List<Shape> inactiveBlocks;
 
     //Passed to the Block class so that it knows where to create the individual blocks.
     private FragmentActivity fragmentActivity;
@@ -36,7 +36,7 @@ public class gameInstance extends Fragment {
 
         fragmentActivity = getActivity();
 
-        //inactiveBlocks = new ArrayList<>();
+        inactiveBlocks = new ArrayList<>();
     }
 
     @Override
@@ -86,7 +86,6 @@ public class gameInstance extends Fragment {
             public void onClick(View v) {
                 if (checkLeft()) {
                     for (int i = 0; i < 4; i++) {
-
                         activeBlocks.getBlocks().get(i).setX(activeBlocks.getBlocks().get(i).getX() - 25f);
                     }
                     activeBlocks.centerX = activeBlocks.centerX - 25f;

@@ -3,4 +3,18 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="left_blue_column">Left Blue Column</string>
+    <string name="right_blue_column" />
+    <string name="down_arrow" />
+    <string name="rotate" />
+    <string name="left_arrow" />
+    <string name="right_arrow" />
+    <string name="blue_block" />
+    <string name="green_block" />
+    <string name="grey_block" />
+    <string name="light_blue_block" />
+    <string name="orange_block" />
+    <string name="pink_block" />
+    <string name="red_block" />
+    <string name="yellow_block" />
 </resources>

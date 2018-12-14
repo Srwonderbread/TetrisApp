@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/frameLayout"
     android:layout_width="match_parent"
@@ -14,110 +13,127 @@
         android:id="@+id/imageView"
         android:layout_width="100dp"
         android:layout_height="1000dp"
+        android:contentDescription="@string/left_blue_column"
         android:src="@android:color/holo_blue_dark" />
 
     <ImageView
         android:id="@+id/imageView1"
         android:layout_width="100dp"
         android:layout_height="1000dp"
-        android:layout_gravity="right"
+        android:layout_gravity="end"
+        android:contentDescription="@string/right_blue_column"
         android:src="@android:color/holo_blue_dark" />
 
     <ImageButton
         android:id="@+id/downButton"
         android:layout_width="75dp"
         android:layout_height="50dp"
-        android:layout_gravity="right"
+        android:layout_gravity="end"
         android:layout_marginBottom="12.5dp"
-        android:layout_marginRight="12.5dp"
+        android:layout_marginEnd="12.5dp"
         android:layout_marginTop="800dp"
         android:scaleType="centerInside"
         android:src="@drawable/sort_down"
-        android:visibility="visible" />
+        android:visibility="visible"
+        android:contentDescription="@string/down_arrow"
+        android:layout_marginRight="12.5dp" />
 
     <ImageButton
         android:id="@+id/rotateButton"
         android:layout_width="75dp"
         android:layout_height="50dp"
-        android:layout_gravity="right"
+        android:layout_gravity="end"
         android:layout_marginBottom="12.5dp"
         android:layout_marginRight="12.5dp"
         android:layout_marginTop="725dp"
         android:scaleType="centerInside"
         android:src="@drawable/refresh_page_option"
-        android:visibility="visible" />
+        android:visibility="visible"
+        android:contentDescription="@string/rotate"
+        android:layout_marginEnd="12.5dp" />
 
     <ImageButton
         android:id="@+id/leftButton"
         android:layout_width="75dp"
         android:layout_height="50dp"
-        android:layout_gravity="left"
+        android:layout_gravity="start"
         android:layout_marginBottom="12.5dp"
         android:layout_marginLeft="12.5dp"
         android:layout_marginTop="725dp"
         android:scaleType="centerInside"
         android:src="@drawable/back"
-        android:visibility="visible" />
+        android:visibility="visible"
+        android:layout_marginStart="12.5dp"
+        android:contentDescription="@string/left_arrow" />
 
     <ImageButton
         android:id="@+id/rightButton"
         android:layout_width="75dp"
         android:layout_height="50dp"
-        android:layout_gravity="left"
+        android:layout_gravity="start"
         android:layout_marginBottom="12.5dp"
         android:layout_marginLeft="12.5dp"
         android:layout_marginTop="800dp"
         android:scaleType="centerInside"
         android:src="@drawable/arrow"
-        android:visibility="visible" />
+        android:visibility="visible"
+        android:contentDescription="@string/right_arrow"
+        android:layout_marginStart="12.5dp" />
 
     <ImageView
         android:id="@+id/blueBlock"
         android:layout_width="25dp"
         android:layout_height="25dp"
-        android:layout_weight="1"
-        android:src="@drawable/block_blue" />
+        android:src="@drawable/block_blue"
+        android:contentDescription="@string/blue_block" />
 
     <ImageView
         android:id="@+id/greenBlock"
         android:layout_width="25dp"
         android:layout_height="25dp"
-        android:src="@drawable/block_green" />
+        android:src="@drawable/block_green"
+        android:contentDescription="@string/green_block" />
 
     <ImageView
         android:id="@+id/greyBlock"
         android:layout_width="25dp"
         android:layout_height="25dp"
-        android:src="@drawable/block_grey" />
+        android:src="@drawable/block_grey"
+        android:contentDescription="@string/grey_block" />
 
     <ImageView
         android:id="@+id/lightBlue"
         android:layout_width="25dp"
         android:layout_height="25dp"
-        android:src="@drawable/block_lightblue" />
+        android:src="@drawable/block_light_blue"
+        android:contentDescription="@string/light_blue_block" />
 
     <ImageView
         android:id="@+id/orangeBlock"
         android:layout_width="25dp"
         android:layout_height="25dp"
-        android:src="@drawable/block_orange" />
+        android:src="@drawable/block_orange"
+        android:contentDescription="@string/orange_block" />
 
     <ImageView
         android:id="@+id/pinkBlock"
         android:layout_width="25dp"
         android:layout_height="25dp"
-        android:src="@drawable/block_pink" />
+        android:src="@drawable/block_pink"
+        android:contentDescription="@string/pink_block" />
 
     <ImageView
         android:id="@+id/redBlock"
         android:layout_width="25dp"
         android:layout_height="25dp"
-        android:src="@drawable/block_red" />
+        android:src="@drawable/block_red"
+        android:contentDescription="@string/red_block" />
 
     <ImageView
         android:id="@+id/yellowBlock"
         android:layout_width="25dp"
         android:layout_height="25dp"
-        android:src="@drawable/block_yelow" />
+        android:src="@drawable/block_yellow"
+        android:contentDescription="@string/yellow_block" />
 
 </FrameLayout>
