@@ -2,18 +2,21 @@ package com.tetris.git.tetrisapp;
 
 import android.support.v4.app.FragmentActivity;
 import android.view.ViewGroup;
+import android.view.ViewManager;
 import android.widget.FrameLayout;
 
 class lineBlock extends Shape {
 
     private FragmentActivity fragment;
     private FrameLayout frameLayout;
+    private ViewManager viewManager;
     private int blockColor;
 
-    lineBlock(FrameLayout frameLayout, FragmentActivity fragment, int blockColor){
+    lineBlock(FrameLayout frameLayout, FragmentActivity fragment, int blockColor, ViewManager viewManager){
         this.fragment = fragment;
         this.frameLayout = frameLayout;
         this.blockColor = blockColor;
+        this.viewManager = viewManager;
         createLine();
     }
 
@@ -28,9 +31,7 @@ class lineBlock extends Shape {
                     block.image.setY(25f);
                     block.image.setMaxHeight(25);
                     block.image.setMaxWidth(25);
-                    block.image.setLayoutParams(new ViewGroup.LayoutParams(25, 25));
-                    frameLayout.clearFocus();
-                    block.frameLayout.addView(block.getImage());
+                    viewManager.addView(block.image, new ViewGroup.LayoutParams(25, 25));
                     blocks.add(block.image);
                     break;
                 case 1:
@@ -41,8 +42,7 @@ class lineBlock extends Shape {
                     block.image.setY(50f);
                     block.image.setMaxHeight(25);
                     block.image.setMaxWidth(25);
-                    block.image.setLayoutParams(new ViewGroup.LayoutParams(25, 25));
-                    block.frameLayout.addView(block.image);
+                    viewManager.addView(block.image, new ViewGroup.LayoutParams(25, 25));
                     blocks.add(block.image);
                     break;
                 case 2:
@@ -53,8 +53,7 @@ class lineBlock extends Shape {
                     block.image.setY(75f);
                     block.image.setMaxHeight(25);
                     block.image.setMaxWidth(25);
-                    block.image.setLayoutParams(new ViewGroup.LayoutParams(25, 25));
-                    block.frameLayout.addView(block.image);
+                    viewManager.addView(block.image, new ViewGroup.LayoutParams(25, 25));
                     blocks.add(block.image);
                     break;
                 case 3:
@@ -65,8 +64,7 @@ class lineBlock extends Shape {
                     block.image.setY(100f);
                     block.image.setMaxHeight(25);
                     block.image.setMaxWidth(25);
-                    block.image.setLayoutParams(new ViewGroup.LayoutParams(25, 25));
-                    block.frameLayout.addView(block.image);
+                    viewManager.addView(block.image, new ViewGroup.LayoutParams(25, 25));
                     blocks.add(block.image);
                     break;
             }

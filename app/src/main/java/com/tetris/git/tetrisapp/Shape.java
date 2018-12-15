@@ -1,6 +1,7 @@
 package com.tetris.git.tetrisapp;
 
 import android.support.v4.app.FragmentActivity;
+import android.view.ViewManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
@@ -20,17 +21,20 @@ public class Shape {
     private FragmentActivity fragment;
     private FrameLayout frameLayout;
 
+    private ViewManager viewManager;
+
     List<ImageView> blocks;
 
     Shape() {
         blocks = new ArrayList<>();
     }
 
-    public Shape(FragmentActivity fragment, FrameLayout frameLayout, Shapes shape, Color color) {
+    public Shape(FragmentActivity fragment, FrameLayout frameLayout, Shapes shape, Color color, ViewManager viewManager) {
         this.fragment = fragment;
         this.frameLayout = frameLayout;
         this.shape = shape;
         this.color = color;
+        this.viewManager = viewManager;
 
         blocks = new ArrayList<>();
         setUpColor();
@@ -48,13 +52,13 @@ public class Shape {
     private void createBlockShape(){
         switch(shape){
             case square:
-                squareBlock squareBlock = new squareBlock(frameLayout, fragment, blockColor);
+                squareBlock squareBlock = new squareBlock(frameLayout, fragment, blockColor, viewManager);
                 setBlocks(squareBlock.blocks);
                 centerX = 287.5f;
                 centerY = 37.5f;
                 break;
             case L:
-                L LBlock = new L(frameLayout, fragment, blockColor);
+                L LBlock = new L(frameLayout, fragment, blockColor, viewManager);
                 setBlocks(LBlock.blocks);
                 centerX = 275f;
                 centerY = 25f;
@@ -63,7 +67,7 @@ public class Shape {
                 //centerY = 37.5f;
                 break;
             case junk:
-                junkBlock junkBlock = new junkBlock(frameLayout, fragment, blockColor);
+                junkBlock junkBlock = new junkBlock(frameLayout, fragment, blockColor, viewManager);
                 setBlocks(junkBlock.blocks);
                 centerX = 275f;
                 centerY = 50f;
@@ -72,7 +76,7 @@ public class Shape {
                 //centerY = 50f;
                 break;
             case line:
-                lineBlock lineBlock = new lineBlock(frameLayout, fragment, blockColor);
+                lineBlock lineBlock = new lineBlock(frameLayout, fragment, blockColor, viewManager);
                 setBlocks(lineBlock.blocks);
                 centerX = 275f;
                 centerY = 50f;

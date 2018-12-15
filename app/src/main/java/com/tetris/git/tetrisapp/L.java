@@ -2,19 +2,22 @@ package com.tetris.git.tetrisapp;
 
 import android.support.v4.app.FragmentActivity;
 import android.view.ViewGroup;
+import android.view.ViewManager;
 import android.widget.FrameLayout;
 
 class L extends Shape {
 
     private FragmentActivity fragment;
     private FrameLayout frameLayout;
+    private ViewManager viewManager;
     private int blockColor;
 
-    L(FrameLayout frameLayout, FragmentActivity fragment, int blockColor){
+    L(FrameLayout frameLayout, FragmentActivity fragment, int blockColor, ViewManager viewManager){
 
         this.fragment = fragment;
         this.frameLayout = frameLayout;
         this.blockColor = blockColor;
+        this.viewManager = viewManager;
         createL();
     }
 
@@ -29,9 +32,7 @@ class L extends Shape {
                     block.image.setY(25f);
                     block.image.setMaxHeight(25);
                     block.image.setMaxWidth(25);
-                    block.image.setLayoutParams(new ViewGroup.LayoutParams(25, 25));
-                    frameLayout.clearFocus();
-                    block.frameLayout.addView(block.getImage());
+                    viewManager.addView(block.image, new ViewGroup.LayoutParams(25, 25));
                     blocks.add(block.image);
                     break;
                 case 1:
@@ -42,8 +43,7 @@ class L extends Shape {
                     block.image.setY(50f);
                     block.image.setMaxHeight(25);
                     block.image.setMaxWidth(25);
-                    block.image.setLayoutParams(new ViewGroup.LayoutParams(25, 25));
-                    block.frameLayout.addView(block.image);
+                    viewManager.addView(block.image, new ViewGroup.LayoutParams(25, 25));
                     blocks.add(block.image);
                     break;
                 case 2:
@@ -54,8 +54,7 @@ class L extends Shape {
                     block.image.setY(25f);
                     block.image.setMaxHeight(25);
                     block.image.setMaxWidth(25);
-                    block.image.setLayoutParams(new ViewGroup.LayoutParams(25, 25));
-                    block.frameLayout.addView(block.image);
+                    viewManager.addView(block.image, new ViewGroup.LayoutParams(25, 25));
                     blocks.add(block.image);
                     break;
                 case 3:
@@ -66,8 +65,7 @@ class L extends Shape {
                     block.image.setY(25f);
                     block.image.setMaxHeight(25);
                     block.image.setMaxWidth(25);
-                    block.image.setLayoutParams(new ViewGroup.LayoutParams(25, 25));
-                    block.frameLayout.addView(block.image);
+                    viewManager.addView(block.image, new ViewGroup.LayoutParams(25, 25));
                     blocks.add(block.image);
                     break;
             }
