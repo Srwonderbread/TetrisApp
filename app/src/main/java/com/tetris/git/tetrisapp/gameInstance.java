@@ -87,7 +87,7 @@ public class gameInstance extends Fragment {
         left.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (checkLeft()) {
+                if (checkLeft() && checkLeftSafety()) {
                     for (int i = 0; i < 4; i++) {
                         activeBlocks.getBlocks().get(i).setX(activeBlocks.getBlocks().get(i).getX() - 25f);
                     }
@@ -99,7 +99,7 @@ public class gameInstance extends Fragment {
         right.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (checkRight()) {
+                if (checkRight() && checkRightSafety()) {
                     for (int i = 0; i < 4; i++) {
                         activeBlocks.getBlocks().get(i).setX(activeBlocks.getBlocks().get(i).getX() + 25f);
                     }
@@ -245,7 +245,57 @@ public class gameInstance extends Fragment {
                 return false;
             }
         }
+        for (View view: inactiveBlocks){
+            for (int i = 0; i < 4; i++){
+                if (activeBlocks.getBlocks().get(i).getX() == (view.getX() - 25) && activeBlocks.getBlocks().get(i).getY() == (view.getY() - 25)){
+                    return false;
+                }
+            }
+        }
+
         return true;
+    }
+
+    public boolean checkLeftSafety(){
+        List<Float> rotationXSafety = new ArrayList<>();
+        List<Float> rotationYSafety = new ArrayList<>();
+        boolean isInBoundsX = true;
+        for (int i = 0; i < 4; i++) {
+            rotationXSafety.add(activeBlocks.getBlocks().get(i).getX() - 25f);
+            rotationYSafety.add(activeBlocks.getBlocks().get(i).getY());
+        }
+        for (View view: inactiveBlocks) {
+            for (int i = 0; i < 4; i++) {
+                if (rotationXSafety.get(i) == view.getX() && rotationYSafety.get(i) == view.getY()) {
+                    isInBoundsX = false;
+                }
+            }
+        }
+        if (isInBoundsX){
+            return true;
+        }
+        return false;
+    }
+
+    public boolean checkRightSafety(){
+        List<Float> rotationXSafety = new ArrayList<>();
+        List<Float> rotationYSafety = new ArrayList<>();
+        boolean isInBoundsX = true;
+        for (int i = 0; i < 4; i++) {
+            rotationXSafety.add(activeBlocks.getBlocks().get(i).getX() + 25f);
+            rotationYSafety.add(activeBlocks.getBlocks().get(i).getY());
+        }
+        for (View view: inactiveBlocks) {
+            for (int i = 0; i < 4; i++) {
+                if (rotationXSafety.get(i) == view.getX() && rotationYSafety.get(i) == view.getY()) {
+                    isInBoundsX = false;
+                }
+            }
+        }
+        if (isInBoundsX){
+            return true;
+        }
+        return false;
     }
 
     public boolean checkRight(){
@@ -256,12 +306,26 @@ public class gameInstance extends Fragment {
                 return false;
             }
         }
+        for (View view: inactiveBlocks){
+            for (int i = 0; i < 4; i++){
+                if (activeBlocks.getBlocks().get(i).getX() == (view.getX() + 25) && activeBlocks.getBlocks().get(i).getY() == (view.getY() - 25)){
+                        return false;
+                }
+            }
+        }
         return true;
     }
     public boolean checkBottom(){
         for (int i = 0; i < 4; i++){
             if (activeBlocks.getBlocks().get(i).getY() >= 850){
                 return false;
+            }
+        }
+        for (View view: inactiveBlocks){
+            for (int i = 0; i < 4; i++){
+                if (activeBlocks.getBlocks().get(i).getX() == view.getX() && activeBlocks.getBlocks().get(i).getY() == (view.getY() - 25)){
+                    return false;
+                }
             }
         }
         return true;
@@ -287,6 +351,18 @@ public class gameInstance extends Fragment {
         return true;
     }
 
+    public boolean checkOtherBlocks(){
+        for (View view: inactiveBlocks){
+            for (int i = 0; i < 4; i++){
+                if (activeBlocks.getBlocks().get(i).getX() == view.getX() && activeBlocks.getBlocks().get(i).getY() == (view.getY() - 25)){
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
     private void createNewShape(){
         fragmentActivity.runOnUiThread(new Runnable() {
             @Override
@@ -301,7 +377,7 @@ public class gameInstance extends Fragment {
     private class Gravity extends TimerTask {
         @Override
         public void run() {
-            if (!checkBottom()) {
+            if (!checkBottom() || checkOtherBlocks()) {
                 inactiveBlocks.addAll(activeBlocks.blocks);
                 createNewShape();
                 run = false;
